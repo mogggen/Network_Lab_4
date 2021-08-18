@@ -164,7 +164,7 @@ void ConnectServer(SOCKET sock)
 				if (id == -1)
 				{
 					id = newPlayerMsg->msg.head.id;
-					SetConsoleTitle((string(newPlayerMsg->name) + string(": id=") + to_string(id)).c_str());
+					SetConsoleTitle((string(newPlayerMsg->name) + string(": Id=") + to_string(id)).c_str());
 					move(sock, id); // dummy command to recive the player coordinates
 				}
 				break;
@@ -178,7 +178,7 @@ void ConnectServer(SOCKET sock)
 				std::cout << '[' << newPlayerPositionMsg->msg.head.seqNo << "]:\tpos:(";
 
 				std::cout << newPlayerPositionMsg->pos.x << ";";
-				std::cout << newPlayerPositionMsg->pos.y << ")\tid=" << newPlayerPositionMsg->msg.head.id << endl;
+				std::cout << newPlayerPositionMsg->pos.y << ")\tId=" << newPlayerPositionMsg->msg.head.id << endl;
 				if (newPlayerPositionMsg->msg.head.id == id)
 				{
 					x = newPlayerPositionMsg->pos.x;
@@ -204,8 +204,8 @@ void ConnectServer(SOCKET sock)
 using namespace std;
 int main()
 {
-	string ipAddress = "130.240.40.7";	// IP Address of the server
-	int LinuxPort = 49152;				// Linux Server port
+	string ipAddress = "130.240.40.25";	// IP Address of the server
+	int LinuxPort = 49152; 54000; 		// Linux Server port
 
 	/*ipAddress = "127.0.0.1";
 	LinuxPort = 9002;*/
@@ -276,7 +276,7 @@ int main()
 	while (!isFinished)
 	{
 		//send to linux server
-		scanf_s("%s", command, 16);
+		scanf_s("%s", command, 16); // take from java key input
 		for (char i = 0; i < sizeof(command) / sizeof(char); i++)
 		{
 			command[i] = tolower(command[i]);
@@ -319,7 +319,7 @@ int main()
 
 	// Close everything
 	listen.join();
-	Sleep(500);
+	Sleep(0.5);
 	closesocket(listening);
 	WSACleanup();
 	return 0;
